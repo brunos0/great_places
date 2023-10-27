@@ -1,4 +1,6 @@
 import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 //import 'package:flutter/foundation.dart';
 
 class PlaceLocation {
@@ -12,8 +14,8 @@ class PlaceLocation {
 class Place {
   final String id;
   final String title;
-  final PlaceLocation location;
-  final File image;
+  final PlaceLocation? location;
+  final XFile image;
 
   Place(
       {required this.id,
