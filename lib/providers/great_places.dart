@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,27 @@ import 'package:image_picker/image_picker.dart';
 
 class GreatPlaces with ChangeNotifier {
   final List<Place> _items = [];
+
+  Future<void> loadPlaces() async {
+    final dataList = await DbUtil.getData('places');
+
+    if (dataList.isEmpty) return;
+
+    dataList.map(
+      (item) {
+        _items.add(
+          Place(
+            id: item['id'].toString(),
+            title: item['title'].toString(),
+            image: XFile(item['image'].toString()),
+            location: null,
+          ),
+        );
+      },
+    ).toList();
+
+    notifyListeners();
+  }
 
   List<Place> get items {
     return [..._items];

@@ -1,6 +1,5 @@
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
-import 'package:sqflite/sqlite_api.dart';
 
 class DbUtil {
   static Future<sql.Database> database() async {
@@ -21,7 +20,12 @@ class DbUtil {
     await db.insert(
       table,
       data,
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      conflictAlgorithm: sql.ConflictAlgorithm.replace,
     );
+  }
+
+  static Future<List<Map<String, Object?>>> getData(String table) async {
+    final db = await DbUtil.database();
+    return db.query(table);
   }
 }
