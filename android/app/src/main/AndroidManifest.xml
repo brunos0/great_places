@@ -8,6 +8,8 @@
         android:label="great_places"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="${API_KEY_MAPS}"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
