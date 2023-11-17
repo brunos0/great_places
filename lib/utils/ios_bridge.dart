@@ -4,7 +4,7 @@ import 'dart:developer' as dev;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class IosBridge {
-  static const platform = MethodChannel('com.example.myapp/iosbridge');
+  static const platform = MethodChannel('ccom.example.great_places/iosbridge');
 
   static Future<String?> get myVariable async {
     String? value;
