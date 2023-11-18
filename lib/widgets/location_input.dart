@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:great_places/screens/map_screen.dart';
 import 'package:great_places/utils/location_util.dart';
-//import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationInput extends StatefulWidget {
@@ -12,6 +12,25 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInpuState extends State<LocationInput> {
   String? _previewImageUrl;
+  bool gpsAvaliable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _getGpsPermission();
+  }
+
+  Future<void> _getGpsPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    if (permission != LocationPermission.denied) {
+      setState(() {
+        gpsAvaliable = true;
+      });
+    }
+  }
 
   Future<void> _getuCurrentUserLocation() async {
     final Position locData = await Geolocator.getCurrentPosition(
@@ -23,6 +42,14 @@ class _LocationInpuState extends State<LocationInput> {
     setState(() {
       _previewImageUrl = staticMapInputUrl;
     });
+  }
+
+  Future<void> _selectOnMap() async {
+    final selectedLocation = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (ctx) => const MapScreen(),
+    ));
+    if (selectedLocation == null) return;
+    //
   }
 
   @override
@@ -51,7 +78,7 @@ class _LocationInpuState extends State<LocationInput> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextButton.icon(
-              onPressed: _getuCurrentUserLocation,
+              onPressed: gpsAvaliable ? _getuCurrentUserLocation : null,
               icon: const Icon(Icons.location_on),
               label: Text(
                 "Localização Atual",
@@ -59,7 +86,7 @@ class _LocationInpuState extends State<LocationInput> {
               ),
             ),
             TextButton.icon(
-              onPressed: null,
+              onPressed: gpsAvaliable ? _selectOnMap : null,
               icon: const Icon(Icons.map),
               label: Text(
                 "Selecione um mapa",

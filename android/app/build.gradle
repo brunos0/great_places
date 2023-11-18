@@ -15,7 +15,8 @@ def getEnvVar(String name) {
             value = env.getProperty(name)
         }
     }
-    return value
+
+    return value 
 }
 
 def localProperties = new Properties()
@@ -68,7 +69,13 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        manifestPlaceholders = [applicationName: "com.example.great_places", API_KEY: getEnvVar("API_KEY_MAPS")]
+        manifestPlaceholders.API_KEY =  getEnvVar("API_KEY_MAPS")
+        /*
+        def apikeyPropertiesFile = rootProject.file("keys.properties")
+        def apikeyProperties = new Properties()
+        apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+        manifestPlaceholders.API_KEY = apikeyProperties["API_KEY_MAPS"]
+        */
     }
 
     buildTypes {
