@@ -4,11 +4,13 @@ import 'package:great_places/providers/great_places.dart';
 import 'package:great_places/screens/place_form_screen.dart';
 import 'package:great_places/screens/places_list_screen.dart';
 import 'package:great_places/utils/app_routes.dart';
+import 'package:great_places/utils/ios_bridge.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
   runApp(const MyApp());
+  IosBridge.myVariable;
 }
 
 class MyApp extends StatelessWidget {

@@ -27,9 +27,17 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '15.6'
+
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
+  
+  #pod 'google_maps_flutter_ios' , '~>2.3.2'
+  pod 'GoogleMaps', '~> 7.4.0'
+
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
@@ -42,3 +50,5 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 end
+
+
