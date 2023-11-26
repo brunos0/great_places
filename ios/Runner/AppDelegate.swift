@@ -8,8 +8,7 @@ import GoogleMaps
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-      
-      //let semaphore = DispatchSemaphore(value: 0)
+
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
 
       let envChannel = FlutterMethodChannel(name: "com.example.great_places/iosbridge",
@@ -19,14 +18,12 @@ import GoogleMaps
       (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
       guard call.method == "getApiKey" else {
         result(FlutterMethodNotImplemented)
-         // semaphore.signal()
         return
       }
       self.receiveApiKey(call: call, result: result)
-       // semaphore.signal()
+
     })
-    //  semaphore.wait()
-      
+
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
