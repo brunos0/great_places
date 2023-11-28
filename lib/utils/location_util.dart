@@ -1,4 +1,3 @@
-//import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:io' show Platform;
 
 String googleApiKey = const String.fromEnvironment('API_KEY_MAPS');
