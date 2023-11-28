@@ -1,8 +1,8 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:io' show Platform;
 
-String googleApiKey = dotenv.env["API_KEY_MAPS"]!;
-String googleApiKeyIOS = dotenv.env["API_KEY_MAPS_IOS"]!;
+String googleApiKey = const String.fromEnvironment('API_KEY_MAPS');
+String googleApiKeyIOS = const String.fromEnvironment('API_KEY_MAPS_IOS');
 
 class LocationUtil {
   static String generateLocationPreviewImage(

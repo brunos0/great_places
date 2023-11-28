@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:great_places/providers/great_places.dart';
 import 'package:great_places/screens/place_form_screen.dart';
 import 'package:great_places/screens/places_list_screen.dart';
 import 'package:great_places/utils/app_routes.dart';
-import 'package:great_places/utils/ios_bridge.dart';
 import 'package:provider/provider.dart';
-import 'dart:io' show Platform;
 
-Future<void> main() async {
-  await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
-  if (Platform.isIOS) {
-    IosBridge.myVariable;
-  }
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

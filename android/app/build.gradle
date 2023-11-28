@@ -4,21 +4,6 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
-def getEnvVar(String name) {
-    def value = System.getenv(name)
-    if (value == null) {
-        def envFile = file('../../.env')
-
-        if (envFile.exists()) {
-            def env = new Properties()
-            envFile.withInputStream { env.load(it) }
-            value = env.getProperty(name)
-        }
-    }
-
-    return value 
-}
-
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -69,7 +54,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        manifestPlaceholders.API_KEY =  getEnvVar("API_KEY_MAPS")
+        manifestPlaceholders.API_KEY =  "$System.env.name"
         /*
         def apikeyPropertiesFile = rootProject.file("keys.properties")
         def apikeyProperties = new Properties()
