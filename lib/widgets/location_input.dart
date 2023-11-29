@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:great_places/screens/map_screen.dart';
 import 'package:great_places/utils/location_util.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationInput extends StatefulWidget {
-  const LocationInput({super.key});
+  final Function onSelectPosition;
+
+  const LocationInput(this.onSelectPosition, {super.key});
 
   @override
   State<LocationInput> createState() => _LocationInpuState();
@@ -35,7 +38,6 @@ class _LocationInpuState extends State<LocationInput> {
   Future<void> _getuCurrentUserLocation() async {
     final Position locData = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    //final LocationData locData = await Location().getLocation();
 
     final staticMapInputUrl = LocationUtil.generateLocationPreviewImage(
         latitude: locData.latitude, longitude: locData.longitude);
@@ -45,10 +47,14 @@ class _LocationInpuState extends State<LocationInput> {
   }
 
   Future<void> _selectOnMap() async {
-    final selectedLocation = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (ctx) => const MapScreen(),
-    ));
-    if (selectedLocation == null) return;
+    final LatLng selectedPosition = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => const MapScreen(),
+      ),
+    );
+
+    //print(selectedPosition.latitude);
+    widget.onSelectPosition(selectedPosition);
     //
   }
 

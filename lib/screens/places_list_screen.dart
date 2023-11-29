@@ -10,13 +10,17 @@ class PlacesListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Meus Lugares"), actions: <Widget>[
-        IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(AppRoutes.placeForm);
-            },
-            icon: const Icon(Icons.add))
-      ]),
+      appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Colors.white,
+          title: const Text("Meus Lugares"),
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AppRoutes.placeForm);
+                },
+                icon: const Icon(Icons.add))
+          ]),
       body: FutureBuilder(
         future: Provider.of<GreatPlaces>(context, listen: false).loadPlaces(),
         builder: (ctx, snapshot) => snapshot.connectionState ==
