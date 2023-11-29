@@ -54,13 +54,8 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        manifestPlaceholders.API_KEY =  "$System.env.name"
-        /*
-        def apikeyPropertiesFile = rootProject.file("keys.properties")
-        def apikeyProperties = new Properties()
-        apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
-        manifestPlaceholders.API_KEY = apikeyProperties["API_KEY_MAPS"]
-        */
+        manifestPlaceholders.API_KEY =  "${getProperty('API_KEY_MAPS')}"
+
     }
 
     buildTypes {

@@ -39,11 +39,6 @@ class _LocationInpuState extends State<LocationInput> {
     final Position locData = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    final staticMapInputUrl = LocationUtil.generateLocationPreviewImage(
-        latitude: locData.latitude, longitude: locData.longitude);
-    setState(() {
-      _previewImageUrl = staticMapInputUrl;
-    });
     showPreview(locData.latitude, locData.longitude);
   }
 
@@ -58,7 +53,6 @@ class _LocationInpuState extends State<LocationInput> {
     widget.onSelectPosition(selectedPosition);
 
     showPreview(selectedPosition.latitude, selectedPosition.longitude);
-    //
   }
 
   void showPreview(double latitude, double longitude) {

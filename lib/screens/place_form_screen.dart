@@ -31,11 +31,10 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
     });
   }
 
-  bool _isValidForm() {
-    return _titleController.text.isNotEmpty &&
-        _pickedImage != null &&
-        _pickedPosition != null;
-  }
+  bool _isValidForm() =>
+      _titleController.text.isNotEmpty &&
+      _pickedImage != null &&
+      _pickedPosition != null;
 
   void _submitForm() {
     if (!_isValidForm()) return;

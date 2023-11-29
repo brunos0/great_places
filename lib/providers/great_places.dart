@@ -60,14 +60,15 @@ class GreatPlaces with ChangeNotifier {
     );
 
     _items.add(newPlace);
+
     DbUtil.insert(
       'places',
       {
         'id': newPlace.id,
         'title': newPlace.title,
         'image': newPlace.image.path,
-        'lat': position.latitude,
-        'log': position.longitude,
+        'latitude': position.latitude,
+        'longitude': position.longitude,
         'adress': address
       },
     );
