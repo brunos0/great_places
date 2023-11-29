@@ -44,6 +44,7 @@ class _LocationInpuState extends State<LocationInput> {
     setState(() {
       _previewImageUrl = staticMapInputUrl;
     });
+    showPreview(locData.latitude, locData.longitude);
   }
 
   Future<void> _selectOnMap() async {
@@ -55,7 +56,17 @@ class _LocationInpuState extends State<LocationInput> {
 
     //print(selectedPosition.latitude);
     widget.onSelectPosition(selectedPosition);
+
+    showPreview(selectedPosition.latitude, selectedPosition.longitude);
     //
+  }
+
+  void showPreview(double latitude, double longitude) {
+    final staticMapInputUrl = LocationUtil.generateLocationPreviewImage(
+        latitude: latitude, longitude: longitude);
+    setState(() {
+      _previewImageUrl = staticMapInputUrl;
+    });
   }
 
   @override

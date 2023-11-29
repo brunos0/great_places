@@ -21,7 +21,10 @@ class GreatPlaces with ChangeNotifier {
             id: item['id'].toString(),
             title: item['title'].toString(),
             image: XFile(item['image'].toString()),
-            location: null,
+            location: PlaceLocation(
+                latitude: item['latitude'] as double,
+                longitude: item['longitude'] as double,
+                address: item['address'].toString()),
           ),
         );
       },
@@ -62,7 +65,10 @@ class GreatPlaces with ChangeNotifier {
       {
         'id': newPlace.id,
         'title': newPlace.title,
-        'image': newPlace.image.path
+        'image': newPlace.image.path,
+        'lat': position.latitude,
+        'log': position.longitude,
+        'adress': address
       },
     );
     notifyListeners();

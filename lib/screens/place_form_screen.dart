@@ -93,7 +93,7 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
                 tapTargetSize:
                     Platform.isIOS ? null : MaterialTapTargetSize.shrinkWrap,
               ),
-              onPressed: _isValidForm() ? _submitForm : null, // : null,
+              onPressed: _isValidForm() ? _submitForm : null,
             ),
           )
         ],
