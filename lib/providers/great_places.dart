@@ -69,7 +69,7 @@ class GreatPlaces with ChangeNotifier {
         'image': newPlace.image.path,
         'latitude': position.latitude,
         'longitude': position.longitude,
-        'adress': address
+        'address': address
       },
     );
     notifyListeners();
