@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:great_places/models/place.dart';
+//import 'package:great_places/models/place.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen(
-      {this.initialLocation =
-          const PlaceLocation(latitude: 37.3861, longitude: -122.0839),
-      this.isReadonly = false,
-      super.key});
+  const MapScreen({this.initialLocation, this.isReadonly = false, super.key});
 
-  final PlaceLocation initialLocation;
+  final LatLng? initialLocation;
   final bool isReadonly;
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -17,11 +14,34 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   LatLng? _pickedPosition;
+  late LatLng initialLocation;
+  late Future<void> currentPositionFuture;
 
   void _selectPosition(LatLng position) {
     setState(() {
       _pickedPosition = position;
     });
+  }
+
+  Future<void> getCurrentPosition() async {
+    LatLng? initLoc = widget.initialLocation;
+    if (initLoc == null) {
+      Position location = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      initLoc = LatLng(location.latitude, location.longitude);
+    }
+    setState(() {
+      if (widget.isReadonly) {
+        _pickedPosition = initLoc;
+      }
+      initialLocation = initLoc!;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    currentPositionFuture = getCurrentPosition();
   }
 
   @override
@@ -30,7 +50,9 @@ class _MapScreenState extends State<MapScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
-        title: const Text("Selecione..."),
+        title: widget.isReadonly
+            ? const Text('Localização escolhida')
+            : const Text('Selecione...'),
         actions: [
           if (!widget.isReadonly)
             IconButton(
@@ -43,20 +65,26 @@ class _MapScreenState extends State<MapScreen> {
             ),
         ],
       ),
-      body: GoogleMap(
-        initialCameraPosition: CameraPosition(
-            target: LatLng(
-              widget.initialLocation.latitude,
-              widget.initialLocation.longitude,
-            ),
-            zoom: 13),
-        onTap: widget.isReadonly ? null : _selectPosition,
-        markers: _pickedPosition == null
-            ? {}
-            : {
-                Marker(
-                    markerId: const MarkerId('p1'), position: _pickedPosition!)
-              },
+      body: FutureBuilder(
+        future: currentPositionFuture,
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? const Center(child: CircularProgressIndicator())
+                : GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target: initialLocation,
+                      zoom: 13,
+                    ),
+                    onTap: widget.isReadonly ? null : _selectPosition,
+                    markers: (_pickedPosition == null && !widget.isReadonly)
+                        ? {}
+                        : {
+                            Marker(
+                              markerId: const MarkerId('p1'),
+                              position: _pickedPosition!,
+                            )
+                          },
+                  ),
       ),
     );
   }

@@ -72,6 +72,7 @@ class GreatPlaces with ChangeNotifier {
         'address': address
       },
     );
+    //
     notifyListeners();
   }
 }

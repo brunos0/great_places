@@ -39,6 +39,12 @@ class _LocationInpuState extends State<LocationInput> {
     final Position locData = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
+    widget.onSelectPosition(
+      LatLng(
+        locData.latitude,
+        locData.longitude,
+      ),
+    );
     showPreview(locData.latitude, locData.longitude);
   }
 

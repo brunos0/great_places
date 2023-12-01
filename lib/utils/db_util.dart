@@ -26,6 +26,16 @@ class DbUtil {
 
   static Future<List<Map<String, Object?>>> getData(String table) async {
     final db = await DbUtil.database();
+    List<Map> result = await db.rawQuery('PRAGMA table_info("places")');
+
+    List<dynamic> columnNames = result.map((row) => row['name']).toList();
+
+    print(columnNames);
     return db.query(table);
+  }
+
+  static Future<void> closeDb() async {
+    final db = await DbUtil.database();
+    return db.close();
   }
 }
